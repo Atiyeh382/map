@@ -41,7 +41,7 @@ L.geoJSON(Polygon2,{
     color: 'red',        // outline color
     weight: 3,           // outline thickness
     fillColor: '#f53', // inside fill color
-    fillOpacity: 0.5
+    fillOpacity: 0.1
 
 }).addTo(map)
 // ], {
@@ -61,6 +61,21 @@ shp("qomm.zip").then(function (geojson) {
           }
     }).addTo(map);
   });
+
+
+for (let i = 0; i < 100; i++) {
+    let lat = 25 + (Math.random() * (40 - 25));  
+    let lon = 44 + (Math.random() * (63 - 44)); 
+  
+    L.circleMarker([lat, lon], {
+      radius: 5,
+      color: "green",
+      fillColor: "lime",
+      fillOpacity: 0.8
+    }).addTo(map)
+      .bindPopup("Random point #" + (i + 1));
+ }
+
 
 map.on('click', function(e) {
     alert("You clicked the map at " + e.latlng.toString());
