@@ -51,6 +51,17 @@ L.geoJSON(Polygon2,{
 //     fillOpacity: 0.5 }
 // ).addTo(map);
 
+shp("qomm.zip").then(function (geojson) {
+    L.geoJSON(geojson, {
+        style: {
+            color: "green",       // border color
+            weight: 2,            // border thickness
+            fillColor: "green",   // inside color
+            fillOpacity: 0.1     // transparency
+          }
+    }).addTo(map);
+  });
+
 map.on('click', function(e) {
     alert("You clicked the map at " + e.latlng.toString());
 });
