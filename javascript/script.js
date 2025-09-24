@@ -1,13 +1,14 @@
-
+//load map
 var map = L.map('map').setView([51.505, -0.09], 13);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+//add Tehran marker ----------------------------------------
 const marker= L.marker([35.6892, 51.3890]).addTo(map)
   .bindPopup("Tehran, Iran")
   .openPopup();
-
+//add first polygon ----------------------------------------
 var Polygon1 = {
 
     "type":"FeatureCollection", "features": [
@@ -24,7 +25,7 @@ var Polygon1 = {
 const pol1=L.geoJSON(Polygon1 );
 pol1.addTo(map)
 
-
+//add second polygon --------------------------------------------
 var Polygon2={
     "type":"FeatureCollection", "features": [
         {
@@ -36,8 +37,9 @@ var Polygon2={
           "properties": null
         }
         ]
-
 }
+
+
 const pol2=L.geoJSON(Polygon2,{
     color: 'red',        // outline color
     weight: 3,           // outline thickness
@@ -46,12 +48,9 @@ const pol2=L.geoJSON(Polygon2,{
 
 })
 pol2.addTo(map)
-// ], {
-//     color: 'red',        // outline color
-//     weight: 3,           // outline thickness
-//     fillColor: '#f53', // inside fill color
-//     fillOpacity: 0.5 }
-// ).addTo(map);
+
+
+//add qom shp ---------------------------------------------
 var qom_shp;
 async function load_shp(){
   const geojson= await shp("qomm.zip") ;
@@ -66,6 +65,7 @@ async function load_shp(){
 }
 
 
+//add som random markers -------------------------------------
 const markers=L.layerGroup();
 for (let i = 0; i < 100; i++) {
     let lat = 25 + (Math.random() * (40 - 25));  
@@ -81,6 +81,8 @@ for (let i = 0; i < 100; i++) {
  }
 markers.addTo(map)
 
+
+// add show-hide control button ------------------------------
 load_shp().then(() => {
   var overlays = {
     "Polygon1": pol1,
@@ -95,6 +97,8 @@ load_shp().then(() => {
   L.control.layers(null, overlays,).addTo(map);
 });
 
+
+//add coordint box ------------------------------------------
 var coordsControl = L.control({ position: "bottomright" });
 
 coordsControl.onAdd = function (map) {
@@ -115,4 +119,12 @@ coordsControl.addTo(map);
 map.on("mousemove", function (e) {
   coordsControl.update(e.latlng);
 });
+
+//add miny map ---------------------------------------------------
+var osmMini = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+});
+// Add MiniMap
+var osmMini = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png');
+var miniMap = new L.Control.MiniMap(osmMini, {toggleDisplay:true, minimized:false}).addTo(map);
 
