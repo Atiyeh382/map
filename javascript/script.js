@@ -66,20 +66,25 @@ async function load_shp(){
 
 
 //add som random markers -------------------------------------
-const markers=L.layerGroup();
+const markers=L.layerGroup().addTo(map);
+function add_random_point(){
 for (let i = 0; i < 100; i++) {
     let lat = 25 + (Math.random() * (40 - 25));  
     let lon = 44 + (Math.random() * (63 - 44)); 
   
-    L.circleMarker([lat, lon], {
+    const m=L.circleMarker([lat, lon], {
       radius: 5,
       color: "green",
       fillColor: "lime",
       fillOpacity: 0.8
     }).addTo(markers)
-
+    setTimeout(() => {
+      markers.removeLayer(m);
+  }, 4000); // 5 minutes
  }
-markers.addTo(map)
+
+}
+setInterval(add_random_point,2000)
 
 
 // add show-hide control button ------------------------------

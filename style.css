@@ -1,11 +1,62 @@
+body{
+    justify-content: center;
+    display: flex;
+    background-color: #F0F8FF;
+  
+}
 #map{
  height: 900px;
+ width: 80%;
+ /* margin-right: 100px; */
+ margin-right: 10px;
+ border-radius: 20px;
+ box-shadow: 
+ 0 4px 6px rgba(0, 0, 0, 0.1),   /* small sharp shadow */
+ 0 8px 16px rgba(0, 0, 0, 0.08), /* medium soft shadow */
+ 0 16px 24px rgba(0, 0, 0, 0.06);
 }
+#side-bar{
+    background-color:white;
+    width: 20%;
+    border-radius: 20px;
+    padding-top: 50px;
+    box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),   /* small sharp shadow */
+    0 8px 16px rgba(0, 0, 0, 0.08), /* medium soft shadow */
+    0 16px 24px rgba(0, 0, 0, 0.06);/* larger softer shadow */
+}
+
+
 .coords-control {
     background: rgba(255,255,255,0.9);
     padding: 4px 8px;
     font-size: 13px;
     border-radius: 4px;
     box-shadow: 0 0 4px rgba(0,0,0,0.3);
-  }
-  
+}
+.sid_buttons{
+    margin-left: 2.5cm;
+    margin-top: 5px;
+    height: 1.3cm;
+    width:5cm ;
+    border-radius: 10px;
+    border: none;
+    background-color: #006D6F;
+    color:#F0F8FF;
+    font-size: medium;
+    box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.06);
+
+transition: all 0.2s ease;
+}
+
+
+
+
+button:hover {
+box-shadow: 
+0 6px 10px rgba(0, 0, 0, 0.15),
+0 4px 6px rgba(0, 0, 0, 0.1);
+transform: translateY(-2px); /* subtle lift */
+}
