@@ -4,7 +4,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
-L.marker([35.6892, 51.3890]).addTo(map)
+const marker= L.marker([35.6892, 51.3890]).addTo(map)
   .bindPopup("Tehran, Iran")
   .openPopup();
 
@@ -86,13 +86,33 @@ load_shp().then(() => {
     "Polygon1": pol1,
     "Polygon2":pol2,
     "qom_shp":qom_shp,
-    "marker":markers
+    "markers":markers,
+    "Tehran marker":marker,
+ 
 
   
   }
   L.control.layers(null, overlays,).addTo(map);
 });
 
-map.on('click', function(e) {
-    alert("You clicked the map at " + e.latlng.toString());
+var coordsControl = L.control({ position: "bottomright" });
+
+coordsControl.onAdd = function (map) {
+  this._div = L.DomUtil.create("div", "leaflet-control coords-control");
+  this.update();
+  return this._div;
+};
+
+coordsControl.update = function (latlng) {
+  this._div.innerHTML = latlng
+    ? "Lat: " + latlng.lat.toFixed(5) + "<br>Lon: " + latlng.lng.toFixed(5)
+    : "Move mouse over map";
+};
+
+coordsControl.addTo(map);
+
+// update on mouse move
+map.on("mousemove", function (e) {
+  coordsControl.update(e.latlng);
 });
+
