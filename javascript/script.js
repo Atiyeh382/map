@@ -21,7 +21,8 @@ var Polygon1 = {
         }
         ]
 }
-L.geoJSON(Polygon1 ).addTo(map);
+const pol1=L.geoJSON(Polygon1 );
+pol1.addTo(map)
 
 
 var Polygon2={
@@ -37,32 +38,35 @@ var Polygon2={
         ]
 
 }
-L.geoJSON(Polygon2,{
+const pol2=L.geoJSON(Polygon2,{
     color: 'red',        // outline color
     weight: 3,           // outline thickness
     fillColor: '#f53', // inside fill color
     fillOpacity: 0.1
 
-}).addTo(map)
+})
+pol2.addTo(map)
 // ], {
 //     color: 'red',        // outline color
 //     weight: 3,           // outline thickness
 //     fillColor: '#f53', // inside fill color
 //     fillOpacity: 0.5 }
 // ).addTo(map);
+var qom_shp;
+async function load_shp(){
+  const geojson= await shp("qomm.zip") ;
+  qom_shp = L.geoJSON(geojson, {
+    style: {
+      color: "green",
+      weight: 2,
+      fillColor: "green",
+      fillOpacity: 0.1
+    }
+  }).addTo(map);
+}
 
-shp("qomm.zip").then(function (geojson) {
-    L.geoJSON(geojson, {
-        style: {
-            color: "green",       // border color
-            weight: 2,            // border thickness
-            fillColor: "green",   // inside color
-            fillOpacity: 0.1     // transparency
-          }
-    }).addTo(map);
-  });
 
-
+const markers=L.layerGroup();
 for (let i = 0; i < 100; i++) {
     let lat = 25 + (Math.random() * (40 - 25));  
     let lon = 44 + (Math.random() * (63 - 44)); 
@@ -72,10 +76,22 @@ for (let i = 0; i < 100; i++) {
       color: "green",
       fillColor: "lime",
       fillOpacity: 0.8
-    }).addTo(map)
-      .bindPopup("Random point #" + (i + 1));
- }
+    }).addTo(markers)
 
+ }
+markers.addTo(map)
+
+load_shp().then(() => {
+  var overlays = {
+    "Polygon1": pol1,
+    "Polygon2":pol2,
+    "qom_shp":qom_shp,
+    "marker":markers
+
+  
+  }
+  L.control.layers(null, overlays,).addTo(map);
+});
 
 map.on('click', function(e) {
     alert("You clicked the map at " + e.latlng.toString());
