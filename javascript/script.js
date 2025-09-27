@@ -4,10 +4,12 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+myLayers=[]
 //add Tehran marker ----------------------------------------
 const marker= L.marker([35.6892, 51.3890]).addTo(map)
   .bindPopup("Tehran, Iran")
   .openPopup();
+myLayers.push(marker)
 //add first polygon ----------------------------------------
 var Polygon1 = {
 
@@ -24,6 +26,7 @@ var Polygon1 = {
 }
 const pol1=L.geoJSON(Polygon1 );
 pol1.addTo(map)
+myLayers.push(pol1)
 
 //add second polygon --------------------------------------------
 var Polygon2={
@@ -48,7 +51,7 @@ const pol2=L.geoJSON(Polygon2,{
 
 })
 pol2.addTo(map)
-
+myLayers.push(pol2)
 
 //add qom shp ---------------------------------------------
 var qom_shp;
@@ -73,9 +76,11 @@ for (let i = 0; i < 100; i++) {
     let lon = 44 + (Math.random() * (63 - 44)); 
   
     const m=L.circleMarker([lat, lon], {
-      radius: 5,
-      color: "green",
-      fillColor: "lime",
+      
+      radius: 3,
+      color: "red",
+      fillColor: "red",
+      
       fillOpacity: 0.8
     }).addTo(markers)
     setTimeout(() => {
@@ -85,10 +90,11 @@ for (let i = 0; i < 100; i++) {
 
 }
 setInterval(add_random_point,2000)
-
+myLayers.push(markers)
 
 // add show-hide control button ------------------------------
 load_shp().then(() => {
+  myLayers.push(qom_shp)
   var overlays = {
     "Polygon1": pol1,
     "Polygon2":pol2,
@@ -132,4 +138,30 @@ var osmMini = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // Add MiniMap
 var osmMini = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png');
 var miniMap = new L.Control.MiniMap(osmMini, {toggleDisplay:true, minimized:false}).addTo(map);
+window.onload=function(){
+const btn = document.getElementById("deleteAllLayers");
+
+
+btn.addEventListener("click", function() {
+  const btn_inner= btn.textContent.trim(); 
+  if (btn_inner=="Delete All Layers"){
+    btn.innerHTML="Show all layer"
+
+  for (let i = 0; i < myLayers.length; i++) {
+   myLayers[i].remove()
+  }
+  }
+  else{
+    for (let i = 0; i < myLayers.length; i++) {
+      myLayers[i].addTo(map);
+     }
+    btn.innerHTML="Delete All Layers"
+
+  }
+
+});
+}
+
+
+
 
