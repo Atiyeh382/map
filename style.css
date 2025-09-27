@@ -44,9 +44,7 @@ body{
     background-color: #006D6F;
     color:#F0F8FF;
     font-size: medium;
-    box-shadow: 
-    0 4px 6px rgba(0, 0, 0, 0.1),
-    0 2px 4px rgba(0, 0, 0, 0.06);
+    box-shadow: 5px 5px 5px rgb(174, 173, 173);
 
 transition: all 0.2s ease;
 }
@@ -60,3 +58,12 @@ box-shadow:
 0 4px 6px rgba(0, 0, 0, 0.1);
 transform: translateY(-2px); /* subtle lift */
 }
+
+
+.hidden-btn {
+    background-color: #83c5be;
+    color: white;
+    box-shadow: 
+    0 6px 10px rgba(0, 0, 0, 0.15),
+    0 4px 6px rgba(0, 0, 0, 0.1);
+  }

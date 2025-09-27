@@ -146,16 +146,18 @@ btn.addEventListener("click", function() {
   const btn_inner= btn.textContent.trim(); 
   if (btn_inner=="Delete All Layers"){
     btn.innerHTML="Show all layer"
-
+    btn.classList.toggle("hidden-btn");
   for (let i = 0; i < myLayers.length; i++) {
    myLayers[i].remove()
   }
+  
   }
   else{
     for (let i = 0; i < myLayers.length; i++) {
       myLayers[i].addTo(map);
      }
     btn.innerHTML="Delete All Layers"
+    btn.classList.toggle("hidden-btn");
 
   }
 
